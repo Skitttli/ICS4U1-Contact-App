@@ -12,7 +12,7 @@ Things To Add
     ,- Editing Contacts
     ,- Deleting Contacts
     ,- Displaying Main List
-3. Search
+3. Searching
 4. Sorting
 ,5. Add New Contact
 ,6. Edit Contact
@@ -27,11 +27,10 @@ TODO
 4. Search for Contacts
 ,5. Delete Contact when creating new Contact
 ,6. Make Delete phone number work
-7. Search for Contacts
-8. Expanding the contactapp makes more columns show up
-9. Make a second version of the app that has editable columns to be more inline with the requirements
-,10. Do I really need num of contacts? I can prob remove it
-11. Save after each contact is created or edited not just when app is closed
+7. Expanding the contactapp makes more columns show up
+8. Make a second version of the app that has editable columns to be more inline with the requirements
+,9. Do I really need num of contacts? I can prob remove it
+10. Save after each contact is created or edited not just when app is closed
 
 
 Classes Needed

@@ -132,7 +132,6 @@ public class App extends Application {
         mainScene = new Scene(mainVbox, 400, 480);
     }
 
-    //TODO Merge newContact with editContact
     public static void newContact(){
         Stage addStage = new Stage();
 
@@ -146,9 +145,6 @@ public class App extends Application {
 
         Label phoneNumberLabel = new Label("Phone Numbers");
 
-        
-        //TODO Make this not scuffed
-        //TODO Make this sections its own method
         VBox phoneBox = new VBox();
         HBox resizeNumPhoneBox = new HBox();
 
@@ -196,7 +192,6 @@ public class App extends Application {
 
         Button saveContactButton = new Button("Save Contact");
         saveContactButton.setOnAction(e->{
-            //TODO Make this not convert from textfield arraylist to string arraylist right here
             ArrayList<String> stringPhoneNums = new ArrayList<>();
             for(TextField curField:phoneNumberList){
                 if(curField.getLength()!=0){
@@ -261,8 +256,6 @@ public class App extends Application {
         Label phoneNumberLabel = new Label("Phone Numbers");
 
 
-        //TODO Make this not scuffed
-        //TODO Make this sections its own method
         VBox phoneBox = new VBox();
         HBox resizeNumPhoneBox = new HBox();
 
@@ -319,7 +312,6 @@ public class App extends Application {
 
         Button saveContactButton = new Button("Save Changes");
         saveContactButton.setOnAction(e->{
-            //TODO Make this not convert from textfield arraylist to string arraylist right here
             ArrayList<String> stringPhoneNums = new ArrayList<>();
             for(TextField curField:phoneNumberList){
                 if(curField.getLength()!=0){
