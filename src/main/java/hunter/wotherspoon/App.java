@@ -167,10 +167,13 @@ public class App extends Application {
             }
         });
 
-        //TODO Check work
          deletePhone.setOnAction(e->{
              phoneNumberList.remove(phoneNumberList.size()-1);
-
+             phoneBox.getChildren().clear();
+             for(TextField curField:phoneNumberList){
+                 curField.setPromptText("Phone Number #"+(phoneNumberList.indexOf(curField)+1));
+                 phoneBox.getChildren().add(curField);
+             }
          });
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
 
@@ -237,6 +240,8 @@ public class App extends Application {
     public static void viewContact(Contact curContact){
         Stage viewStage = new Stage();
 
+        viewStage.setTitle(curContact.getFullName());
+
         Label fullNameLabel = new Label(curContact.getFullName());
         fullNameLabel.setFont(new Font("Arial",24));
         fullNameLabel.setTextAlignment(TextAlignment.CENTER);
@@ -288,9 +293,13 @@ public class App extends Application {
             }
         });
 
-        //TODO Check work
          deletePhone.setOnAction(e->{
              phoneNumberList.remove(phoneNumberList.size()-1);
+             phoneBox.getChildren().clear();
+             for(TextField curField:phoneNumberList){
+                 curField.setPromptText("Phone Number #"+(phoneNumberList.indexOf(curField)+1));
+                 phoneBox.getChildren().add(curField);
+             }
          });
 
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
