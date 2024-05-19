@@ -138,14 +138,16 @@ public class App extends Application {
 
         Label firstNameLabel = new Label("First Name");
         TextField firstNameField = new TextField();
+        firstNameField.setFocusTraversable(false);
 
         Label lastNameLabel = new Label("Last Name");
         TextField lastNameField = new TextField();
-
-
+        lastNameField.setFocusTraversable(false);
 
         Label phoneNumberLabel = new Label("Phone Numbers");
 
+        
+        //TODO Make this not scuffed
         //TODO Make this sections its own method
         VBox phoneBox = new VBox();
         HBox resizeNumPhoneBox = new HBox();
@@ -153,8 +155,6 @@ public class App extends Application {
         Button addPhone = new Button("Add Phone Number");
         Button deletePhone = new Button("Delete Phone Number");
 
-
-        //TODO Make this not scuffed
         ArrayList<TextField> phoneNumberList = new ArrayList<>();
 
         addPhone.setOnAction(e->{
@@ -178,18 +178,21 @@ public class App extends Application {
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
 
 
-
         Label emailLabel = new Label("Email");
         TextField emailField = new TextField();
+        emailField.setFocusTraversable(false);
 
         Label addressLabel = new Label("Address");
         TextField addressField = new TextField();
+        addressField.setFocusTraversable(false);
 
         Label birthdayLabel = new Label("Birthday");
         TextField birthdayField = new TextField();
+        birthdayField.setFocusTraversable(false);
 
         Label companyLabel = new Label("Company");
         TextField companyField = new TextField();
+        companyField.setFocusTraversable(false);
 
         Button saveContactButton = new Button("Save Contact");
         saveContactButton.setOnAction(e->{
@@ -210,10 +213,11 @@ public class App extends Application {
                 birthdayField.getLength() != 0?birthdayField.getText():"N/A",
                 companyField.getLength() != 0?companyField.getText():"N/A"
             ));
+
+            contactTable.refresh();
             addStage.close();
         });
 
-        //TODO Make this work
         Button deleteContactButton = new Button("Delete Contact");
         deleteContactButton.setOnAction(e->{
             addStage.close();
@@ -221,8 +225,7 @@ public class App extends Application {
 
         VBox addBox= new VBox();
         addBox.setSpacing(5);
-        //addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,phoneNumberField, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton);
-        addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton);
+        addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton,deleteContactButton);
         addScene = new Scene(addBox,480,640);
 
         addStage.setScene(addScene);
@@ -232,11 +235,12 @@ public class App extends Application {
 
     //TODO Implement this
     public static void editContact(Contact curContact){
-        
+
     }
 
-    //TODO Remove setEditable Comments
     //TODO Move this to editContact, make a specific viewContact zone
+    //!firstNameField.setEditable(false);
+    //!firstNameField.setMouseTransparent(true);
     public static void viewContact(Contact curContact){
         Stage viewStage = new Stage();
 
@@ -248,21 +252,17 @@ public class App extends Application {
 
         Label firstNameLabel = new Label("First Name");
         TextField firstNameField = new TextField(curContact.getFirstName());
-        //!firstNameField.setEditable(false);
-        //!firstNameField.setMouseTransparent(true);
         firstNameField.setFocusTraversable(false);
 
         Label lastNameLabel = new Label("Last Name");
         TextField lastNameField = new TextField(curContact.getLastName());
-        //!lastNameField.setEditable(false);
-        //!lastNameField.setMouseTransparent(true);
         lastNameField.setFocusTraversable(false);
 
         Label phoneNumberLabel = new Label("Phone Numbers");
 
 
         //TODO Make this not scuffed
-
+        //TODO Make this sections its own method
         VBox phoneBox = new VBox();
         HBox resizeNumPhoneBox = new HBox();
 
@@ -275,8 +275,6 @@ public class App extends Application {
             TextField curField = new TextField(curPhoneNum);
             phoneNumberList.add(curField);
             curField.setPromptText("Phone Number #"+(phoneNumberList.indexOf(curField)));
-            //!curField.setEditable(false);
-            //!curField.setMouseTransparent(true);
             curField.setFocusTraversable(false);
 
             phoneBox.getChildren().add(curField);
@@ -289,7 +287,6 @@ public class App extends Application {
             for(TextField curField:phoneNumberList){
                 curField.setPromptText("Phone Number #"+(phoneNumberList.indexOf(curField)));
                 phoneBox.getChildren().add(curField);
-                
             }
         });
 
@@ -301,37 +298,27 @@ public class App extends Application {
                  phoneBox.getChildren().add(curField);
              }
          });
-
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
 
 
         Label emailLabel = new Label("Email");
         TextField emailField = new TextField(curContact.getEmail());
-        //!emailField.setEditable(false);
-        //!emailField.setMouseTransparent(true);
         emailField.setFocusTraversable(false);
 
         Label addressLabel = new Label("Address");
         TextField addressField = new TextField(curContact.getAddress());
-        //!addressField.setEditable(false);
-        //!addressField.setMouseTransparent(true);
         addressField.setFocusTraversable(false);
 
         Label birthdayLabel = new Label("Birthday");
         TextField birthdayField = new TextField(curContact.getBirthday());
-        //!birthdayField.setEditable(false);
-        //!birthdayField.setMouseTransparent(true);
         birthdayField.setFocusTraversable(false);
 
         Label companyLabel = new Label("Company");
         TextField companyField = new TextField(curContact.getCompany());
-        //!companyField.setEditable(false);
-        //!companyField.setMouseTransparent(true);
         companyField.setFocusTraversable(false);
 
         Button saveContactButton = new Button("Save Changes");
         saveContactButton.setOnAction(e->{
-
             //TODO Make this not convert from textfield arraylist to string arraylist right here
             ArrayList<String> stringPhoneNums = new ArrayList<>();
             for(TextField curField:phoneNumberList){
