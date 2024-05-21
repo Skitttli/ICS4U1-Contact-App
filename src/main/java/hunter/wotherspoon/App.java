@@ -26,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 
 public class App extends Application {
@@ -80,7 +81,7 @@ public class App extends Application {
                 csvWriter.write(curPhoneNum);
                 if(curPhoneList.indexOf(curPhoneNum)!=curPhoneList.size()-1) csvWriter.write(":");
             }
-            csvWriter.write(","+curContact.getEmail()+","+curContact.getAddress()+","+curContact.getBirthday()+","+curContact.getCompany());
+            csvWriter.write(","+curContact.getEmail()+","+curContact.getAddress()+","+curContact.getBirthday()+","+curContact.getCompany()+","+curContact.getProfileColourInt());
             if(c!=contacts.size()-1) csvWriter.write("\n");
             }
             csvWriter.close();
@@ -93,7 +94,7 @@ public class App extends Application {
         while((curLine=csvReader.readLine())!=null){
             String[] curData = curLine.split(",");
             ArrayList<String> curPhonesList =new ArrayList<>(Arrays.asList(curData[2].split(":")));
-            contacts.add(new Contact(curData[0], curData[1], curPhonesList, curData[3], curData[4], curData[5], curData[6]));
+            contacts.add(new Contact(curData[0], curData[1], curPhonesList, curData[3], curData[4], curData[5], curData[6],Integer.parseInt(curData[7])));
         }
     }
 
@@ -123,7 +124,7 @@ public class App extends Application {
                     setText(null);
                 } else {
                     setText(item);
-                    this.setStyle("-fx-background-color: "+contacts.get(this.getIndex()).getProfileColour()+"; -fx-text-fill: white; -fx-font-size: 16px;");
+                    this.setStyle("-fx-background-color: "+contacts.get(this.getIndex()).getProfileColourHex()+"; -fx-text-fill: white; -fx-font-size: 16px; -fx-alignment: CENTER;");
                 }
             }
         });
@@ -226,7 +227,8 @@ public class App extends Application {
                 emailField.getLength() != 0?emailField.getText():"N/A",
                 addressField.getLength() != 0?addressField.getText():"N/A",
                 birthdayField.getLength() != 0?birthdayField.getText():"N/A",
-                companyField.getLength() != 0?companyField.getText():"N/A"
+                companyField.getLength() != 0?companyField.getText():"N/A",
+                new Random().nextInt(21)
             ));
 
             contactTable.refresh();

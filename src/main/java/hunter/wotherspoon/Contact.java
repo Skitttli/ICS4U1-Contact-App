@@ -1,7 +1,6 @@
 package hunter.wotherspoon;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import javafx.beans.property.SimpleStringProperty;
 
@@ -12,11 +11,11 @@ public class Contact {
     private SimpleStringProperty address;
     private SimpleStringProperty birthday;
     private SimpleStringProperty company;
-    private SimpleStringProperty profileColour;
+    private int profileColour;
     //private int numPhoneNumbers;
     private ArrayList<String> phoneNumberList = new ArrayList<>();
 
-    public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company){
+    public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company,int profileColour){
         setFirstName(firstName);
         setLastName(lastName);
         setPhoneList(phoneNumbers);
@@ -24,9 +23,11 @@ public class Contact {
         setAddress(address);
         setBirthday(birthday);
         setCompany(company);
-        setProfileColour();
+        setProfileColour(profileColour);
     }
-
+    public void setProfileColour(int profileColour){
+        this.profileColour = profileColour;
+    }
     public void setCompany(String company){
         this.company = new SimpleStringProperty(company);
     }
@@ -48,77 +49,58 @@ public class Contact {
     public void setPhoneList(ArrayList<String> phoneList){
         this.phoneNumberList = phoneList;
     }
-    public void setProfileColour(){
-        Random rand = new Random();
-        switch (rand.nextInt(21)) {
-            case 0:
-                profileColour = new SimpleStringProperty("#aa47bd");   
-                break;
-            case 1:
-                profileColour = new SimpleStringProperty("#7b1fa2");         
-                break;
-            case 2:
-                profileColour = new SimpleStringProperty("#77919d");         
-                break;
-            case 3: 
-                profileColour = new SimpleStringProperty("#455a65");        
-                break;
-            case 4: 
-                profileColour = new SimpleStringProperty("#ec417a");        
-                break;
-            case 5:  
-                profileColour = new SimpleStringProperty("#c2185d");       
-                break;
-            case 6: 
-                profileColour = new SimpleStringProperty("#5d6ac0");        
-                break;
-            case 7: 
-                profileColour = new SimpleStringProperty("#0388d2");        
-                break;
-            case 8:
-                profileColour = new SimpleStringProperty("#01569c");      
-                break;
-            case 9:
-                profileColour = new SimpleStringProperty("#0098a9");      
-                break;
-            case 10:
-                profileColour = new SimpleStringProperty("#00897b");      
-                break;
-            case 11:
-                profileColour = new SimpleStringProperty("#004d40");      
-                break;
-            case 12:
-                profileColour = new SimpleStringProperty("#6a9f39");      
-                break;
-            case 13:
-                profileColour = new SimpleStringProperty("#34691e");      
-                break;
-            case 14:
-                profileColour = new SimpleStringProperty("#8a6f63");
-                break;
-            case 15:
-                profileColour = new SimpleStringProperty("#5f4038");      
-                break;
-            case 16:
-                profileColour = new SimpleStringProperty("#7d57c1");      
-                break;
-            case 17:
-                profileColour = new SimpleStringProperty("#512da9");      
-                break;
-            case 18:
-                profileColour = new SimpleStringProperty("#ef6c00");      
-                break;
-            case 19:
-                profileColour = new SimpleStringProperty("#f84f20");      
-                break;
-            case 20:
-                profileColour = new SimpleStringProperty("#bf350b");      
-                break;
-        }
 
-        
+
+    public int getProfileColourInt(){
+        return profileColour;
     }
-
+    public String getProfileColourHex(){
+        switch (profileColour) {
+            case 0:
+                 return "#aa47bd";                   
+            case 1:
+                return "#7b1fa2";                         
+            case 2:
+                return "#77919d";                         
+            case 3: 
+                return "#455a65";                        
+            case 4: 
+                return "#ec417a";                        
+            case 5:  
+                return "#c2185d";                       
+            case 6: 
+                return "#5d6ac0";                       
+            case 7: 
+                return "#0388d2";                        
+            case 8:
+                return "#01569c";                      
+            case 9:
+                return "#0098a9";                      
+            case 10:
+                return "#00897b";      
+            case 11:
+                return "#004d40";                      
+            case 12:
+                return "#6a9f39";                      
+            case 13:
+                return "#34691e";                      
+            case 14:
+                return "#8a6f63";                
+            case 15:
+                return "#5f4038";                      
+            case 16:
+                return "#7d57c1";                      
+            case 17:
+                return "#512da9";                     
+            case 18:
+                return "#ef6c00";                      
+            case 19:
+                return "#f84f20";      
+            case 20:
+            default:
+                return "#bf350b";                     
+        }   
+    }
     public ArrayList<String> getPhoneList(){
         return phoneNumberList;
     }  
@@ -147,12 +129,10 @@ public class Contact {
         } else if(firstName.get().equals("N/A")){
             return lastName.get().charAt(0)+"";
         }else{
-            return firstName.get().charAt(0)+""+lastName.get().charAt(0);
+            return firstName.get().charAt(0)+""+lastName.get().charAt(0)+" ";
         }
     }
-    public String getProfileColour(){
-        return profileColour.get();
-    }
+
     public String getFullName(){
         if(lastName.get().equals("N/A")){
             return firstName.get();
