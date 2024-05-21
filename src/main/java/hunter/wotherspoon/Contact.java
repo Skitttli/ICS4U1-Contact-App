@@ -168,7 +168,6 @@ public class Contact {
         }
         if(birthday.contains(",")){
             birthday = birthday.replaceAll(",","``");
-            System.out.println(birthday);
         }
         if(company.contains(",")){
             company = company.replaceAll(",","``");
@@ -197,7 +196,6 @@ public class Contact {
         }
         if(birthday.contains("``")){
             birthday = birthday.replaceAll("``",",");
-            System.out.println(birthday);
         }
         if(company.contains("``")){
             company = company.replaceAll("``",",");
