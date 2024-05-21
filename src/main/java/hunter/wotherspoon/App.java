@@ -3,18 +3,16 @@ package hunter.wotherspoon;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -38,6 +36,7 @@ public class App extends Application {
     private static TableView<Contact> contactTable = new TableView<Contact>();
     private static TableColumn<Contact,String> nameCol = new TableColumn<>("Name");
     private static TableColumn<Contact,String> emailCol = new TableColumn<>("Email");
+    private static TableColumn<Contact,String> profileCol = new TableColumn<>("");
     public static final ObservableList<Contact> contacts = FXCollections.observableArrayList();
 
     private static BufferedReader csvReader;
@@ -112,6 +111,23 @@ public class App extends Application {
         emailCol.setCellValueFactory(new PropertyValueFactory<Contact, String>("email"));
         emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        profileCol.setMinWidth(50);
+        profileCol.setCellValueFactory(new PropertyValueFactory<Contact, String>("initials"));
+        profileCol.setCellFactory(e-> new TableCell<Contact, String>(){
+            @Override
+            public void updateItem(String item, boolean empty) {
+                // Always invoke super constructor.
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item);
+                    this.setStyle("-fx-background-color: "+contacts.get(this.getIndex()).getProfileColour()+"; -fx-text-fill: white; -fx-font-size: 16px;");
+                }
+            }
+        });
+
         contactTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         contactTable.setOnMousePressed(e->{
@@ -120,7 +136,7 @@ public class App extends Application {
                 }
         });
 
-        contactTable.getColumns().addAll(nameCol,emailCol);
+        contactTable.getColumns().addAll(profileCol,nameCol,emailCol);
         contactTable.setItems(contacts);
 
         Button addContactButton = new Button("+");
@@ -133,7 +149,7 @@ public class App extends Application {
         VBox mainVbox = new VBox();
         mainVbox.setSpacing(5);
         mainVbox.getChildren().addAll(contactTable,addContactButton);
-        mainScene = new Scene(mainVbox, 400, 480);
+        mainScene = new Scene(mainVbox, 450, 480);
     }
 
     public static void newContact(){

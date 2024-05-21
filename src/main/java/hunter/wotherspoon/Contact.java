@@ -4,17 +4,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.paint.Color;
 
 public class Contact {
     private SimpleStringProperty firstName;
     private SimpleStringProperty lastName;
     private SimpleStringProperty email;
-    private SimpleStringProperty initials;
     private SimpleStringProperty address;
     private SimpleStringProperty birthday;
     private SimpleStringProperty company;
-    private Color profileColour;
+    private SimpleStringProperty profileColour;
     //private int numPhoneNumbers;
     private ArrayList<String> phoneNumberList = new ArrayList<>();
 
@@ -26,6 +24,7 @@ public class Contact {
         setAddress(address);
         setBirthday(birthday);
         setCompany(company);
+        setProfileColour();
     }
 
     public void setCompany(String company){
@@ -49,76 +48,71 @@ public class Contact {
     public void setPhoneList(ArrayList<String> phoneList){
         this.phoneNumberList = phoneList;
     }
-    public void setInitials(String firstName,String lastName){
-        char firstLetter = firstName.charAt(0);
-        char lastLetter = lastName.charAt(0);
-        initials = new SimpleStringProperty(firstLetter+lastLetter+"");
-    }
     public void setProfileColour(){
         Random rand = new Random();
         switch (rand.nextInt(21)) {
             case 0:
-                profileColour = Color.valueOf("#aa47bd");   
+                profileColour = new SimpleStringProperty("#aa47bd");   
                 break;
             case 1:
-                profileColour = Color.valueOf("#7b1fa2");         
+                profileColour = new SimpleStringProperty("#7b1fa2");         
                 break;
             case 2:
-                profileColour = Color.valueOf("#77919d");         
+                profileColour = new SimpleStringProperty("#77919d");         
                 break;
             case 3: 
-                profileColour = Color.valueOf("#455a65");        
+                profileColour = new SimpleStringProperty("#455a65");        
                 break;
             case 4: 
-                profileColour = Color.valueOf("#ec417a");        
+                profileColour = new SimpleStringProperty("#ec417a");        
                 break;
             case 5:  
-                profileColour = Color.valueOf("#c2185d");       
+                profileColour = new SimpleStringProperty("#c2185d");       
                 break;
             case 6: 
-                profileColour = Color.valueOf("#5d6ac0");        
+                profileColour = new SimpleStringProperty("#5d6ac0");        
                 break;
             case 7: 
-                profileColour = Color.valueOf("#0388d2");        
+                profileColour = new SimpleStringProperty("#0388d2");        
                 break;
             case 8:
-                profileColour = Color.valueOf("#01569c");      
+                profileColour = new SimpleStringProperty("#01569c");      
                 break;
             case 9:
-                profileColour = Color.valueOf("#0098a9");      
+                profileColour = new SimpleStringProperty("#0098a9");      
                 break;
             case 10:
-                profileColour = Color.valueOf("#00897b");      
+                profileColour = new SimpleStringProperty("#00897b");      
                 break;
             case 11:
-                profileColour = Color.valueOf("#004d40");      
+                profileColour = new SimpleStringProperty("#004d40");      
                 break;
             case 12:
-                profileColour = Color.valueOf("#6a9f39");      
+                profileColour = new SimpleStringProperty("#6a9f39");      
                 break;
             case 13:
-                profileColour = Color.valueOf("#34691e");      
+                profileColour = new SimpleStringProperty("#34691e");      
                 break;
             case 14:
-                profileColour = Color.valueOf("#8a6f63");
+                profileColour = new SimpleStringProperty("#8a6f63");
                 break;
             case 15:
-                profileColour = Color.valueOf("#5f4038");      
+                profileColour = new SimpleStringProperty("#5f4038");      
                 break;
             case 16:
-                profileColour = Color.valueOf("#7d57c1");      
+                profileColour = new SimpleStringProperty("#7d57c1");      
                 break;
             case 17:
-                profileColour = Color.valueOf("#512da9");      
+                profileColour = new SimpleStringProperty("#512da9");      
                 break;
             case 18:
-                profileColour = Color.valueOf("#ef6c00");      
+                profileColour = new SimpleStringProperty("#ef6c00");      
                 break;
             case 19:
-                profileColour = Color.valueOf("#f84f20");      
+                profileColour = new SimpleStringProperty("#f84f20");      
                 break;
             case 20:
-                profileColour = Color.valueOf("#bf350b");      
+                profileColour = new SimpleStringProperty("#bf350b");      
                 break;
         }
 
@@ -148,11 +142,16 @@ public class Contact {
         return email.get();
     }
     public String getInitials(){
-        return initials.get();
+        if(lastName.get().equals("N/A")){
+            return firstName.get().charAt(0)+"";
+        } else if(firstName.get().equals("N/A")){
+            return lastName.get().charAt(0)+"";
+        }else{
+            return firstName.get().charAt(0)+""+lastName.get().charAt(0);
+        }
     }
-    @SuppressWarnings("exports")
-    public Color getProfileColour(){
-        return profileColour;
+    public String getProfileColour(){
+        return profileColour.get();
     }
     public String getFullName(){
         if(lastName.get().equals("N/A")){

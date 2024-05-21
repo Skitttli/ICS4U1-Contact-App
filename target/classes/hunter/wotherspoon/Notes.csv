@@ -32,6 +32,10 @@ TODO
 ,9. Do I really need num of contacts? I can prob remove it
 10. Save after each contact is created or edited not just when app is closed
 
+BUGS
+1. Birthdays break with commas
+2. 
+
 
 Classes Needed
 1. Contact Class
