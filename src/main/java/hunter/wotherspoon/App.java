@@ -3,14 +3,18 @@ package hunter.wotherspoon;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -221,7 +225,11 @@ public class App extends Application {
         VBox addBox= new VBox();
         addBox.setSpacing(5);
         addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton,deleteContactButton);
-        addScene = new Scene(addBox,480,640);
+
+        ScrollPane scrollPane = new ScrollPane(addBox);
+        scrollPane.setFitToWidth(true);
+
+        addScene = new Scene(scrollPane,480,640);
 
         addStage.setScene(addScene);
         addStage.show();
@@ -342,7 +350,11 @@ public class App extends Application {
         VBox viewBox= new VBox();
         viewBox.setSpacing(5);
         viewBox.getChildren().addAll(fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
-        viewScene = new Scene(viewBox,480,640);
+        
+        ScrollPane scrollPane = new ScrollPane(viewBox);
+        scrollPane.setFitToWidth(true);
+
+        viewScene = new Scene(scrollPane,480,640);
 
         viewStage.setScene(viewScene);
         viewStage.show();
