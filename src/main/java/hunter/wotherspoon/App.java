@@ -165,7 +165,6 @@ public class App extends Application {
         lastNameField.setFocusTraversable(false);
 
         Label phoneNumberLabel = new Label("Phone Numbers");
-
         VBox phoneBox = new VBox();
         HBox resizeNumPhoneBox = new HBox();
 
@@ -195,9 +194,35 @@ public class App extends Application {
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
 
 
-        Label emailLabel = new Label("Email");
-        TextField emailField = new TextField();
-        emailField.setFocusTraversable(false);
+        Label emailLabel = new Label("Emails");
+        VBox emailBox = new VBox();
+        HBox resizeNumEmailBox = new HBox();
+
+        Button addEmail = new Button("Add Email");
+        Button deleteEmail = new Button("Delete Email");
+
+        ArrayList<TextField> emailList = new ArrayList<>();
+
+        addEmail.setOnAction(e->{
+            TextField emailField = new TextField();
+            emailList.add(emailField);
+            emailBox.getChildren().clear();
+            for(TextField curField:emailList){
+                curField.setPromptText("Email #"+(emailList.indexOf(curField)+1));
+                emailBox.getChildren().add(curField);
+            }
+        });
+
+         deleteEmail.setOnAction(e->{
+             emailList.remove(emailList.size()-1);
+             emailBox.getChildren().clear();
+             for(TextField curField:emailList){
+                 curField.setPromptText("Email #"+(emailList.indexOf(curField)+1));
+                 emailBox.getChildren().add(curField);
+             }
+         });
+        resizeNumEmailBox.getChildren().addAll(addEmail,deleteEmail);
+
 
         Label addressLabel = new Label("Address");
         TextField addressField = new TextField();
@@ -220,11 +245,18 @@ public class App extends Application {
                 }
             }
 
+            ArrayList<String> stringEmails = new ArrayList<>();
+            for(TextField curField:emailList){
+                if(curField.getLength()!=0){
+                    stringEmails.add(curField.getText());
+                }
+            }
+
             contacts.add(new Contact(
                 firstNameField.getLength() != 0?firstNameField.getText():"N/A",
                 lastNameField.getLength() != 0? lastNameField.getText():"N/A",
                 stringPhoneNums,
-                emailField.getLength() != 0?emailField.getText():"N/A",
+                stringEmails,
                 addressField.getLength() != 0?addressField.getText():"N/A",
                 birthdayField.getLength() != 0?birthdayField.getText():"N/A",
                 companyField.getLength() != 0?companyField.getText():"N/A",
@@ -242,7 +274,7 @@ public class App extends Application {
 
         VBox addBox= new VBox();
         addBox.setSpacing(5);
-        addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton,deleteContactButton);
+        addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton,deleteContactButton);
 
         ScrollPane scrollPane = new ScrollPane(addBox);
         scrollPane.setFitToWidth(true);
@@ -319,10 +351,34 @@ public class App extends Application {
          });
         resizeNumPhoneBox.getChildren().addAll(addPhone,deletePhone);
 
+        Label emailLabel = new Label("Emails");
+        VBox emailBox = new VBox();
+        HBox resizeNumEmailBox = new HBox();
 
-        Label emailLabel = new Label("Email");
-        TextField emailField = new TextField(curContact.getEmail());
-        emailField.setFocusTraversable(false);
+        Button addEmail = new Button("Add Email");
+        Button deleteEmail = new Button("Delete Email");
+
+        ArrayList<TextField> emailList = new ArrayList<>();
+
+        addEmail.setOnAction(e->{
+            TextField emailField = new TextField();
+            emailList.add(emailField);
+            emailBox.getChildren().clear();
+            for(TextField curField:emailList){
+                curField.setPromptText("Email #"+(emailList.indexOf(curField)+1));
+                emailBox.getChildren().add(curField);
+            }
+        });
+
+         deleteEmail.setOnAction(e->{
+             emailList.remove(emailList.size()-1);
+             emailBox.getChildren().clear();
+             for(TextField curField:emailList){
+                 curField.setPromptText("Email #"+(emailList.indexOf(curField)+1));
+                 emailBox.getChildren().add(curField);
+             }
+         });
+        resizeNumEmailBox.getChildren().addAll(addEmail,deleteEmail);
 
         Label addressLabel = new Label("Address");
         TextField addressField = new TextField(curContact.getAddress());
@@ -345,11 +401,18 @@ public class App extends Application {
                 }
             }
 
+            ArrayList<String> stringEmails = new ArrayList<>();
+            for(TextField curField:emailList){
+                if(curField.getLength()!=0){
+                    stringEmails.add(curField.getText());
+                }
+            }
+
             curContact.changeEverything(
                 firstNameField.getLength() != 0?firstNameField.getText():"N/A",
                 lastNameField.getLength() != 0? lastNameField.getText():"N/A",
                 stringPhoneNums,
-                emailField.getLength() != 0?emailField.getText():"N/A",
+                stringEmails,
                 addressField.getLength() != 0?addressField.getText():"N/A",
                 birthdayField.getLength() != 0?birthdayField.getText():"N/A",
                 companyField.getLength() != 0?companyField.getText():"N/A"
@@ -367,7 +430,7 @@ public class App extends Application {
 
         VBox viewBox= new VBox();
         viewBox.setSpacing(5);
-        viewBox.getChildren().addAll(fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, emailField,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
+        viewBox.getChildren().addAll(fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
         
         ScrollPane scrollPane = new ScrollPane(viewBox);
         scrollPane.setFitToWidth(true);

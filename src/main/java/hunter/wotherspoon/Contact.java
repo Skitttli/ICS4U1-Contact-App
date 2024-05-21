@@ -14,12 +14,25 @@ public class Contact {
     private int profileColour;
     //private int numPhoneNumbers;
     private ArrayList<String> phoneNumberList = new ArrayList<>();
+    private ArrayList<String> emailList = new ArrayList<>();
 
+    //TODO Remove this
     public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company,int profileColour){
         setFirstName(firstName);
         setLastName(lastName);
         setPhoneList(phoneNumbers);
         setEmail(email);
+        setAddress(address);
+        setBirthday(birthday);
+        setCompany(company);
+        setProfileColour(profileColour);
+    }
+
+    public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company,int profileColour){
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneList(phoneNumbers);
+        setEmailList(emails);
         setAddress(address);
         setBirthday(birthday);
         setCompany(company);
@@ -45,6 +58,9 @@ public class Contact {
     }
     public void setEmail(String email){
         this.email=new SimpleStringProperty(email);
+    }
+    public void setEmailList(ArrayList<String> emailList){
+        this.emailList = emailList;
     }
     public void setPhoneList(ArrayList<String> phoneList){
         this.phoneNumberList = phoneList;
@@ -101,9 +117,6 @@ public class Contact {
                 return "#bf350b";                     
         }   
     }
-    public ArrayList<String> getPhoneList(){
-        return phoneNumberList;
-    }  
     public String getCompany(){
         return company.get();
     }
@@ -119,10 +132,15 @@ public class Contact {
     public String getLastName(){
         return lastName.get();
     }
-
     public String getEmail(){
         return email.get();
     }
+    public ArrayList<String> getEmailList(){
+        return emailList;
+    }
+    public ArrayList<String> getPhoneList(){
+        return phoneNumberList;
+    }  
     public String getInitials(){
         if(lastName.get().equals("N/A")){
             return firstName.get().charAt(0)+"";
@@ -143,11 +161,22 @@ public class Contact {
         }
     }
 
+    //TODO Remove this
     public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company){
         setFirstName(firstName);
         setLastName(lastName);
         setPhoneList(phoneNumbers);
         setEmail(email);
+        setAddress(address);
+        setBirthday(birthday);
+        setCompany(company);
+    }
+
+    public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company){
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneList(phoneNumbers);
+        setEmailList(emails);
         setAddress(address);
         setBirthday(birthday);
         setCompany(company);
