@@ -3,30 +3,17 @@ package hunter.wotherspoon;
 import java.util.ArrayList;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 
 public class Contact {
-    private SimpleStringProperty firstName;
-    private SimpleStringProperty lastName;
-    private SimpleStringProperty email;
-    private SimpleStringProperty address;
-    private SimpleStringProperty birthday;
-    private SimpleStringProperty company;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String birthday;
+    private String company;
     private int profileColour;
-    //private int numPhoneNumbers;
     private ArrayList<String> phoneNumberList = new ArrayList<>();
     private ArrayList<String> emailList = new ArrayList<>();
-
-    //TODO Remove this
-    public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company,int profileColour){
-        setFirstName(firstName);
-        setLastName(lastName);
-        setPhoneList(phoneNumbers);
-        setEmail(email);
-        setAddress(address);
-        setBirthday(birthday);
-        setCompany(company);
-        setProfileColour(profileColour);
-    }
 
     public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company,int profileColour){
         setFirstName(firstName);
@@ -42,22 +29,19 @@ public class Contact {
         this.profileColour = profileColour;
     }
     public void setCompany(String company){
-        this.company = new SimpleStringProperty(company);
+        this.company = company;
     }
     public void setBirthday(String birthday){
-        this.birthday = new SimpleStringProperty(birthday);
+        this.birthday = birthday;
     }
     public void setAddress(String address){
-        this.address = new SimpleStringProperty(address);
+        this.address = address;
     }
     public void setFirstName(String firstName){
-        this.firstName = new SimpleStringProperty(firstName);
+        this.firstName = firstName;
     }
     public void setLastName(String lastName){
-        this.lastName = new SimpleStringProperty(lastName);
-    }
-    public void setEmail(String email){
-        this.email=new SimpleStringProperty(email);
+        this.lastName = lastName;
     }
     public void setEmailList(ArrayList<String> emailList){
         this.emailList = emailList;
@@ -118,58 +102,51 @@ public class Contact {
         }   
     }
     public String getCompany(){
-        return company.get();
+        return company;
     }
     public String getBirthday(){
-        return birthday.get();
+        return birthday;
     }
     public String getAddress(){
-        return address.get();
+        return address;
     }
     public String getFirstName(){
-        return firstName.get();
+        return firstName;
     }
     public String getLastName(){
-        return lastName.get();
-    }
-    public String getEmail(){
-        return email.get();
+        return lastName;
     }
     public ArrayList<String> getEmailList(){
         return emailList;
+    }
+    public ObservableValue<String> getFirstEmail(){
+        if(emailList.size()==0){
+            return new SimpleStringProperty("N/A");
+        }else{
+            return new SimpleStringProperty(emailList.get(0));
+        }
     }
     public ArrayList<String> getPhoneList(){
         return phoneNumberList;
     }  
     public String getInitials(){
-        if(lastName.get().equals("N/A")){
-            return firstName.get().charAt(0)+"";
-        } else if(firstName.get().equals("N/A")){
-            return lastName.get().charAt(0)+"";
+        if(lastName.equals("N/A")){
+            return firstName.charAt(0)+"";
+        } else if(firstName.equals("N/A")){
+            return lastName.charAt(0)+"";
         }else{
-            return firstName.get().charAt(0)+""+lastName.get().charAt(0)+" ";
+            return firstName.charAt(0)+""+lastName.charAt(0)+" ";
         }
     }
 
     public String getFullName(){
-        if(lastName.get().equals("N/A")){
-            return firstName.get();
-        } else if(firstName.get().equals("N/A")){
-            return lastName.get();
+        if(lastName.equals("N/A")){
+            return firstName;
+        } else if(firstName.equals("N/A")){
+            return lastName;
         }else{
-            return firstName.get()+" "+lastName.get();
+            return firstName+" "+lastName;
         }
-    }
-
-    //TODO Remove this
-    public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,String email,String address,String birthday,String company){
-        setFirstName(firstName);
-        setLastName(lastName);
-        setPhoneList(phoneNumbers);
-        setEmail(email);
-        setAddress(address);
-        setBirthday(birthday);
-        setCompany(company);
     }
 
     public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company){

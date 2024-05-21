@@ -1,6 +1,7 @@
 package hunter.wotherspoon;
 
-import javafx.application.Application;
+import javafx.application.Application;        //return new SimpleStringProperty(emailList.get(0));
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -81,7 +82,13 @@ public class App extends Application {
                 csvWriter.write(curPhoneNum);
                 if(curPhoneList.indexOf(curPhoneNum)!=curPhoneList.size()-1) csvWriter.write(":");
             }
-            csvWriter.write(","+curContact.getEmail()+","+curContact.getAddress()+","+curContact.getBirthday()+","+curContact.getCompany()+","+curContact.getProfileColourInt());
+            csvWriter.write(",");
+            ArrayList<String> curEmailList = curContact.getEmailList();
+            for(String curEmail:curEmailList){
+                csvWriter.write(curEmail);
+                if(curEmailList.indexOf(curEmail)!=curEmailList.size()-1) csvWriter.write(":");
+            }
+            csvWriter.write(","+curContact.getAddress()+","+curContact.getBirthday()+","+curContact.getCompany()+","+curContact.getProfileColourInt());
             if(c!=contacts.size()-1) csvWriter.write("\n");
             }
             csvWriter.close();
@@ -93,8 +100,9 @@ public class App extends Application {
         String curLine;
         while((curLine=csvReader.readLine())!=null){
             String[] curData = curLine.split(",");
-            ArrayList<String> curPhonesList =new ArrayList<>(Arrays.asList(curData[2].split(":")));
-            contacts.add(new Contact(curData[0], curData[1], curPhonesList, curData[3], curData[4], curData[5], curData[6],Integer.parseInt(curData[7])));
+            ArrayList<String> curPhonesList = new ArrayList<>(Arrays.asList(curData[2].split(":")));
+            ArrayList<String> curEmailsList = new ArrayList<>(Arrays.asList(curData[3].split(":")));
+            contacts.add(new Contact(curData[0], curData[1], curPhonesList, curEmailsList, curData[4], curData[5], curData[6],Integer.parseInt(curData[7])));
         }
     }
 
@@ -109,7 +117,7 @@ public class App extends Application {
         nameCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
         emailCol.setMinWidth(200);
-        emailCol.setCellValueFactory(new PropertyValueFactory<Contact, String>("email"));
+        emailCol.setCellValueFactory(emailCell -> {return emailCell.getValue().getFirstEmail();});
         emailCol.setCellFactory(TextFieldTableCell.forTableColumn());
 
         profileCol.setMinWidth(50);
@@ -359,6 +367,15 @@ public class App extends Application {
         Button deleteEmail = new Button("Delete Email");
 
         ArrayList<TextField> emailList = new ArrayList<>();
+
+        for(String curEmail:curContact.getEmailList()){
+            TextField curField = new TextField(curEmail);
+            emailList.add(curField);
+            curField.setPromptText("Email #"+(emailList.indexOf(curField)));
+            curField.setFocusTraversable(false);
+
+            emailBox.getChildren().add(curField);
+        }
 
         addEmail.setOnAction(e->{
             TextField emailField = new TextField();
