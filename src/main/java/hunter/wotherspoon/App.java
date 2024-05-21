@@ -76,6 +76,7 @@ public class App extends Application {
         csvWriter.flush();
         for(int c = 0;c < contacts.size();c++){
             curContact = contacts.get(c);
+            curContact.removeCommas();
             csvWriter.write(curContact.getFirstName()+","+curContact.getLastName()+",");
             ArrayList<String> curPhoneList = curContact.getPhoneList();
             for(String curPhoneNum:curPhoneList){
@@ -102,7 +103,9 @@ public class App extends Application {
             String[] curData = curLine.split(",");
             ArrayList<String> curPhonesList = new ArrayList<>(Arrays.asList(curData[2].split(":")));
             ArrayList<String> curEmailsList = new ArrayList<>(Arrays.asList(curData[3].split(":")));
-            contacts.add(new Contact(curData[0], curData[1], curPhonesList, curEmailsList, curData[4], curData[5], curData[6],Integer.parseInt(curData[7])));
+            Contact curContact = new Contact(curData[0], curData[1], curPhonesList, curEmailsList, curData[4], curData[5], curData[6],Integer.parseInt(curData[7]));
+            curContact.addBackCommas();
+            contacts.add(curContact);
         }
     }
 

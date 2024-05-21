@@ -6,11 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
 public class Contact {
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String birthday;
-    private String company;
+    private String firstName,lastName, address, birthday, company;
     private int profileColour;
     private ArrayList<String> phoneNumberList = new ArrayList<>();
     private ArrayList<String> emailList = new ArrayList<>();
@@ -24,6 +20,16 @@ public class Contact {
         setBirthday(birthday);
         setCompany(company);
         setProfileColour(profileColour);
+    }
+
+    public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company){
+        setFirstName(firstName);
+        setLastName(lastName);
+        setPhoneList(phoneNumbers);
+        setEmailList(emails);
+        setAddress(address);
+        setBirthday(birthday);
+        setCompany(company);
     }
     public void setProfileColour(int profileColour){
         this.profileColour = profileColour;
@@ -149,14 +155,63 @@ public class Contact {
         }
     }
 
-    public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company){
-        setFirstName(firstName);
-        setLastName(lastName);
-        setPhoneList(phoneNumbers);
-        setEmailList(emails);
-        setAddress(address);
-        setBirthday(birthday);
-        setCompany(company);
+
+    public void removeCommas(){
+        if(firstName.contains(",")){
+            firstName = firstName.replaceAll(",","``");
+        }
+        if(lastName.contains(",")){
+            lastName = lastName.replaceAll(",","``");
+        }
+        if(address.contains(",")){
+            address = address.replaceAll(",","``");
+        }
+        if(birthday.contains(",")){
+            birthday = birthday.replaceAll(",","``");
+            System.out.println(birthday);
+        }
+        if(company.contains(",")){
+            company = company.replaceAll(",","``");
+        }
+        for(int i=0;i<emailList.size();i++){
+            if(emailList.get(i).contains(",")){
+                emailList.set(i,emailList.get(i).replaceAll(",","``"));
+            }
+        }
+        for(int i=0;i<phoneNumberList.size();i++){
+            if(phoneNumberList.get(i).contains(",")){
+                phoneNumberList.set(i,phoneNumberList.get(i).replaceAll(",","``"));
+            }
+        }
     }
 
+    public void addBackCommas(){
+        if(firstName.contains("``")){
+            firstName = firstName.replaceAll("``",",");
+        }
+        if(lastName.contains("``")){
+            lastName = lastName.replaceAll("``",",");
+        }
+        if(address.contains("``")){
+            address = address.replaceAll("``",",");
+        }
+        if(birthday.contains("``")){
+            birthday = birthday.replaceAll("``",",");
+            System.out.println(birthday);
+        }
+        if(company.contains("``")){
+            company = company.replaceAll("``",",");
+        }
+        for(int i=0;i<emailList.size();i++){
+            if(emailList.get(i).contains("``")){
+                emailList.set(i,emailList.get(i).replaceAll("``",","));
+            }
+        }
+        for(int i=0;i<phoneNumberList.size();i++){
+            if(phoneNumberList.get(i).contains("``")){
+                phoneNumberList.set(i,phoneNumberList.get(i).replaceAll("``",","));
+            }
+        }
+    }
+    
 }

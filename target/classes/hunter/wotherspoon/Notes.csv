@@ -4,36 +4,33 @@ Things To Add
     ,- Email
     ,- Name
     - Additional Information/Notes Section
-    - Multiple Emails
+    ,- Multiple Emails
     ,- Multiple Phone Numbers
-    - Profile Picture - Choose Random Colour
+    ,- Profile Picture - Choose Random Colour
 ,2. UI,
     ,- Displaying Contacts
     ,- Editing Contacts
     ,- Deleting Contacts
     ,- Displaying Main List
 3. Searching
-4. Sorting
+,4. Sorting
 ,5. Add New Contact
 ,6. Edit Contact
 ,7. Delete Contact
 8. Star Contact
-9. Profile Picture With first letter of first and last name
+,9. Profile Picture With first letter of first and last name
 
 TODO
-1. Birthdays Split into month/day/year
-2. Multiple Emails
-3. Profile Picture Random Colour
-4. Search for Contacts
-,5. Delete Contact when creating new Contact
-,6. Make Delete phone number work
-7. Expanding the contactapp makes more columns show up
-8. Make a second version of the app that has editable columns to be more inline with the requirements
-,9. Do I really need num of contacts? I can prob remove it
-10. Save after each contact is created or edited not just when app is closed
+,1. Multiple Emails
+,2. Profile Picture Random Colour
+3. Search for Contacts
+,4. Delete Contact when creating new Contact
+,5. Make Delete phone number work
+,6. Do I really need num of contacts? I can prob remove it
+7. Save after each contact is created or edited not just when app is closed
 
 BUGS
-1. Birthdays break with commas
+,1. Birthdays break with commas
 2. 
 
 
