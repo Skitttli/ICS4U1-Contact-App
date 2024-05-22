@@ -132,7 +132,9 @@ public class App extends Application {
                 super.updateItem(item, empty);
 
                 if (item == null || empty) {
-                    setText(null);
+                    getStyleClass().clear();
+                    setStyle(null);
+                    contactTable.refresh();
                 } else {
                     setText(item);
                     this.setStyle("-fx-background-color: "+contacts.get(this.getIndex()).getProfileColourHex()+"; -fx-text-fill: white; -fx-font-size: 16px; -fx-alignment: CENTER;");
