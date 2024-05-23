@@ -1,7 +1,7 @@
 package hunter.wotherspoon;
 
 import javafx.application.Application;        //return new SimpleStringProperty(emailList.get(0));
-
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -16,12 +16,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,6 +47,9 @@ public class App extends Application {
     private static BufferedReader csvReader;
     private static BufferedWriter csvWriter;
     private static String filePath = "src/main/java/hunter/wotherspoon/ContactSave.csv";
+    private double xOffset;
+    private double yOffset;
+    private static VBox mainVbox;
 
 
     
@@ -54,13 +60,22 @@ public class App extends Application {
     @SuppressWarnings("exports")
     @Override
     public void start(Stage stage) throws IOException {
-
         
         stage.setTitle("Contacts App");
 
         readData();
         initMainUI();
+        mainScene.getStylesheets().add(this.getClass().getResource("mainstyle.css").toExternalForm());
+        mainScene.setFill(Color.TRANSPARENT);
         stage.setScene(mainScene);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        mainVbox.setOnMouseDragged(e -> {
+            stage.setX(e.getScreenX() - xOffset);
+            stage.setY(e.getScreenY() - yOffset);
+            e.consume();
+        });
+
         stage.show();
     }
 
@@ -69,7 +84,17 @@ public class App extends Application {
         writeData();
     }
 
-    public static void writeData() throws IOException{
+    /**
+     * Method to write all of the Contact info to the csv file.
+     * <p> First it clears the entire csv file with a buffered writer not using append so that no duplicates
+     * are stored from a previous save
+     * <p> Then it loops through the entire Observable List of {@link #contacts} writing every different value with 
+     * commas in between and the arraylists being split with colons. Finally writing a next line and continuing on to
+     * the next contact
+     * @throws IOException if an I/O error occurs
+     * @throws FileNotFoundException if the csv file is not found
+     */
+    public static void writeData() throws IOException,FileNotFoundException{
         Contact curContact;
         csvWriter = new BufferedWriter(new FileWriter(filePath, false));
         csvWriter = new BufferedWriter(new FileWriter(filePath, true));
@@ -95,7 +120,16 @@ public class App extends Application {
             csvWriter.close();
     }
 
-    public static void readData() throws IOException{
+    /**
+     * Method to read Contact info from the csv file and create new contacts for each of them.
+     * <p> Reads each new line as a contact, and splits the line by commas. For phone numbers and emails where there can be multiple
+     * it splits those sections by colons. It then creates a new contact with all the split data and then adds back the commas if any
+     * were found
+     * <p> Reads until it finds a line that is empty
+     * @throws IOException if an I/O error occurs
+     * @throws FileNotFoundException if the csv file is not found
+     */
+    public static void readData() throws IOException,FileNotFoundException{
         contactTable.getItems().clear();
         csvReader = new BufferedReader(new FileReader(filePath));
         String curLine;
@@ -109,9 +143,11 @@ public class App extends Application {
         }
     }
 
-
+    /**
+     * Initializes Main UI
+     */
     @SuppressWarnings("unchecked")
-    public static void initMainUI(){
+    public void initMainUI(){
 
         contactTable.setPlaceholder(new Label("Add Contacts For Table To Appear"));
 
@@ -154,19 +190,35 @@ public class App extends Application {
         contactTable.setItems(contacts);
 
         Button addContactButton = new Button("+");
-        addContactButton.setPrefSize(100, 20);
+        addContactButton.getStyleClass().add("add-button");
 
         addContactButton.setOnAction(e ->{
             newContact();
         });
 
-        VBox mainVbox = new VBox();
+        Button exitButton = new Button();
+        exitButton.getStyleClass().add("exit-button");
+        exitButton.setOnAction(e->{
+            Platform.exit();
+        });
+
+        mainVbox = new VBox();
         mainVbox.setSpacing(5);
-        mainVbox.getChildren().addAll(contactTable,addContactButton);
-        mainScene = new Scene(mainVbox, 450, 480);
+        mainVbox.getChildren().addAll(exitButton,contactTable,addContactButton);
+        mainVbox.getStyleClass().clear();
+        mainVbox.getStyleClass().add("background-pane");
+
+        mainVbox.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+            event.consume();
+        });
+
+        mainScene = new Scene(mainVbox, 480, 480);
     }
 
-    public static void newContact(){
+
+    public void newContact(){
         Stage addStage = new Stage();
 
         Label firstNameLabel = new Label("First Name");
@@ -280,34 +332,45 @@ public class App extends Application {
             addStage.close();
         });
 
-        Button deleteContactButton = new Button("Delete Contact");
-        deleteContactButton.setOnAction(e->{
+        Button exitButton = new Button();
+        exitButton.getStyleClass().add("exit-button");
+        exitButton.setOnAction(e->{
             addStage.close();
         });
 
         VBox addBox= new VBox();
         addBox.setSpacing(5);
-        addBox.getChildren().addAll(firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton,deleteContactButton);
+        addBox.getChildren().addAll(exitButton,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton);
 
         ScrollPane scrollPane = new ScrollPane(addBox);
         scrollPane.setFitToWidth(true);
 
+        scrollPane.getStyleClass().add("background-pane");
+
         addScene = new Scene(scrollPane,480,640);
 
+        addScene.getStylesheets().add(getClass().getResource("addstyle.css").toExternalForm());
+        addScene.setFill(Color.TRANSPARENT);
         addStage.setScene(addScene);
+        addStage.initStyle(StageStyle.TRANSPARENT);
+
+        scrollPane.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+            event.consume();
+        });
+
+        scrollPane.setOnMouseDragged(event -> {
+            addStage.setX(event.getScreenX() - xOffset);
+            addStage.setY(event.getScreenY() - yOffset);
+            event.consume();
+        });
+
         addStage.show();
 
     }
 
-    //TODO Implement this
-    public static void editContact(Contact curContact){
-
-    }
-
-    //TODO Move this to editContact, make a specific viewContact zone
-    //!firstNameField.setEditable(false);
-    //!firstNameField.setMouseTransparent(true);
-    public static void viewContact(Contact curContact){
+    public void viewContact(Contact curContact){
         Stage viewStage = new Stage();
 
         viewStage.setTitle(curContact.getFullName());
@@ -450,16 +513,39 @@ public class App extends Application {
             viewStage.close();
         });
 
+        Button exitButton = new Button();
+        exitButton.getStyleClass().add("exit-button");
+        exitButton.setOnAction(e->{
+            viewStage.close();
+        });
+
         VBox viewBox= new VBox();
         viewBox.setSpacing(5);
-        viewBox.getChildren().addAll(fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
+        viewBox.getChildren().addAll(exitButton,fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
         
         ScrollPane scrollPane = new ScrollPane(viewBox);
         scrollPane.setFitToWidth(true);
+        scrollPane.getStyleClass().add("background-pane");
 
         viewScene = new Scene(scrollPane,480,640);
 
+        viewScene.getStylesheets().add(getClass().getResource("addstyle.css").toExternalForm());
+        viewScene.setFill(Color.TRANSPARENT);
         viewStage.setScene(viewScene);
+        viewStage.initStyle(StageStyle.TRANSPARENT);
+
+        scrollPane.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+            event.consume();
+        });
+
+        scrollPane.setOnMouseDragged(e -> {
+            viewStage.setX(e.getScreenX() - xOffset);
+            viewStage.setY(e.getScreenY() - yOffset);
+            e.consume();
+        });
+
         viewStage.show();
     }  
 
