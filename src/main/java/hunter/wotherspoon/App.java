@@ -301,7 +301,7 @@ public class App extends Application {
         TextField companyField = new TextField();
         companyField.setFocusTraversable(false);
 
-        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a , or a space\nEvery phone number must only contain digits 0-9");
+        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a comma a colon or a space\nEvery phone number must only contain digits 0-9");
         invalidLabel.setVisible(false);
 
         Button saveContactButton = new Button("Save Contact");
@@ -483,7 +483,7 @@ public class App extends Application {
         TextField companyField = new TextField(curContact.getCompany());
         companyField.setFocusTraversable(false);
 
-        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a , or a space\nEvery phone number must only contain digits 0-9");
+        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a comma a colon or a space\nEvery phone number must only contain digits 0-9");
         invalidLabel.setVisible(false);
 
         Button saveContactButton = new Button("Save Changes");
@@ -566,7 +566,7 @@ public class App extends Application {
             return true;
         }
         for(int i=0;i<emailList.size();i++){
-            if(emailList.get(i).matches(".*[, ].*")||!(emailList.get(i).contains("@")&&emailList.get(i).contains("."))){
+            if(emailList.get(i).matches(".*[, :].*")||!(emailList.get(i).contains("@")&&emailList.get(i).contains("."))){
                 return true;
             }
         }
