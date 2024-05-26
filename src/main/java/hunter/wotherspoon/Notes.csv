@@ -1,3 +1,5 @@
+Commas mean complete
+
 Things To Add
 1. Saving Contacts
     ,- Phone Number
@@ -30,14 +32,12 @@ TODO
 7. Save after each contact is created or edited not just when app is closed
 
 BUGS
-,1. Birthdays break with commas
-2. 
+,1. Birthdays break with commas 
 
 
 Classes Needed
 1. Contact Class
-2. Email Class
-3. Phone Number Class
+
 
 Contact View
 
@@ -60,6 +60,7 @@ Email
     Email Label
 Email
     Email Label
+Other Data
 Save Contact
 
 

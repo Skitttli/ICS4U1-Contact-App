@@ -1,6 +1,6 @@
 package hunter.wotherspoon;
 
-import javafx.application.Application;        //return new SimpleStringProperty(emailList.get(0));
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -301,6 +301,9 @@ public class App extends Application {
         TextField companyField = new TextField();
         companyField.setFocusTraversable(false);
 
+        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a , or a space\nEvery phone number must only contain digits 0-9");
+        invalidLabel.setVisible(false);
+
         Button saveContactButton = new Button("Save Contact");
         saveContactButton.setOnAction(e->{
             ArrayList<String> stringPhoneNums = new ArrayList<>();
@@ -317,19 +320,22 @@ public class App extends Application {
                 }
             }
 
-            contacts.add(new Contact(
-                firstNameField.getLength() != 0?firstNameField.getText():"N/A",
-                lastNameField.getLength() != 0? lastNameField.getText():"N/A",
-                stringPhoneNums,
-                stringEmails,
-                addressField.getLength() != 0?addressField.getText():"N/A",
-                birthdayField.getLength() != 0?birthdayField.getText():"N/A",
-                companyField.getLength() != 0?companyField.getText():"N/A",
-                new Random().nextInt(21)
-            ));
-
-            contactTable.refresh();
-            addStage.close();
+            if(checkInvalid(firstNameField.getText(), lastNameField.getText(), stringPhoneNums, stringEmails, addressField.getText(), birthdayField.getText(), companyField.getText())){
+                invalidLabel.setVisible(true);
+            }else{
+                contacts.add(new Contact(
+                    firstNameField.getLength() != 0?firstNameField.getText():"N/A",
+                    lastNameField.getLength() != 0? lastNameField.getText():"N/A",
+                    stringPhoneNums,
+                    stringEmails,
+                    addressField.getLength() != 0?addressField.getText():"N/A",
+                    birthdayField.getLength() != 0?birthdayField.getText():"N/A",
+                    companyField.getLength() != 0?companyField.getText():"N/A",
+                    new Random().nextInt(21)
+                ));
+                contactTable.refresh();
+                addStage.close();
+            }
         });
 
         Button exitButton = new Button();
@@ -340,7 +346,7 @@ public class App extends Application {
 
         VBox addBox= new VBox();
         addBox.setSpacing(5);
-        addBox.getChildren().addAll(exitButton,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton);
+        addBox.getChildren().addAll(exitButton,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField,saveContactButton, invalidLabel);
 
         ScrollPane scrollPane = new ScrollPane(addBox);
         scrollPane.setFitToWidth(true);
@@ -477,6 +483,9 @@ public class App extends Application {
         TextField companyField = new TextField(curContact.getCompany());
         companyField.setFocusTraversable(false);
 
+        Label invalidLabel = new Label("This input is invalid, please try again\nNo Section may contain ~~\nEvery email must contain a @ and a . and cannot contain a , or a space\nEvery phone number must only contain digits 0-9");
+        invalidLabel.setVisible(false);
+
         Button saveContactButton = new Button("Save Changes");
         saveContactButton.setOnAction(e->{
             ArrayList<String> stringPhoneNums = new ArrayList<>();
@@ -493,18 +502,21 @@ public class App extends Application {
                 }
             }
 
-            curContact.changeEverything(
-                firstNameField.getLength() != 0?firstNameField.getText():"N/A",
-                lastNameField.getLength() != 0? lastNameField.getText():"N/A",
-                stringPhoneNums,
-                stringEmails,
-                addressField.getLength() != 0?addressField.getText():"N/A",
-                birthdayField.getLength() != 0?birthdayField.getText():"N/A",
-                companyField.getLength() != 0?companyField.getText():"N/A"
-            );
-
-            contactTable.refresh();
-            viewStage.close();
+            if(checkInvalid(firstNameField.getText(), lastNameField.getText(), stringPhoneNums, stringEmails, addressField.getText(), birthdayField.getText(), companyField.getText())){
+                invalidLabel.setVisible(true);
+            }else{
+                curContact.changeEverything(
+                    firstNameField.getLength() != 0?firstNameField.getText():"N/A",
+                    lastNameField.getLength() != 0? lastNameField.getText():"N/A",
+                    stringPhoneNums,
+                    stringEmails,
+                    addressField.getLength() != 0?addressField.getText():"N/A",
+                    birthdayField.getLength() != 0?birthdayField.getText():"N/A",
+                    companyField.getLength() != 0?companyField.getText():"N/A"
+                );
+                contactTable.refresh();
+                viewStage.close();
+            }
         });
 
         Button deleteContactButton = new Button("Delete Contact");
@@ -521,7 +533,7 @@ public class App extends Application {
 
         VBox viewBox= new VBox();
         viewBox.setSpacing(5);
-        viewBox.getChildren().addAll(exitButton,fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton);
+        viewBox.getChildren().addAll(exitButton,fullNameLabel,firstNameLabel,firstNameField,lastNameLabel,lastNameField,phoneNumberLabel,resizeNumPhoneBox,phoneBox, emailLabel, resizeNumEmailBox,emailBox,addressLabel,addressField,birthdayLabel,birthdayField,companyLabel,companyField, saveContactButton,deleteContactButton,invalidLabel);
         
         ScrollPane scrollPane = new ScrollPane(viewBox);
         scrollPane.setFitToWidth(true);
@@ -549,4 +561,20 @@ public class App extends Application {
         viewStage.show();
     }  
 
+    public boolean checkInvalid(String firstName,String lastName,ArrayList<String> phoneNumberList,ArrayList<String> emailList,String address,String birthday,String company){
+        if(firstName.contains("~~")||lastName.contains("~~")||address.contains("~~")||birthday.contains("~~")||company.contains("~~")){
+            return true;
+        }
+        for(int i=0;i<emailList.size();i++){
+            if(emailList.get(i).matches(".*[, ].*")||!(emailList.get(i).contains("@")&&emailList.get(i).contains("."))){
+                return true;
+            }
+        }
+        for(int i=0;i<phoneNumberList.size();i++){
+            if(phoneNumberList.get(i).matches(".*\\D.*")&&!phoneNumberList.get(i).equals("N/A")){
+                return true;
+            }
+        }
+        return false;
+    }
 }

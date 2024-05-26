@@ -158,57 +158,47 @@ public class Contact {
 
     public void removeCommas(){
         if(firstName.contains(",")){
-            firstName = firstName.replaceAll(",","``");
+            firstName = firstName.replaceAll(",","~~");
         }
         if(lastName.contains(",")){
-            lastName = lastName.replaceAll(",","``");
+            lastName = lastName.replaceAll(",","~~");
         }
         if(address.contains(",")){
-            address = address.replaceAll(",","``");
+            address = address.replaceAll(",","~~");
         }
         if(birthday.contains(",")){
-            birthday = birthday.replaceAll(",","``");
+            birthday = birthday.replaceAll(",","~~");
         }
         if(company.contains(",")){
-            company = company.replaceAll(",","``");
+            company = company.replaceAll(",","~~");
         }
         for(int i=0;i<emailList.size();i++){
             if(emailList.get(i).contains(",")){
-                emailList.set(i,emailList.get(i).replaceAll(",","``"));
+                emailList.set(i,emailList.get(i).replaceAll(",","~~"));
             }
         }
         for(int i=0;i<phoneNumberList.size();i++){
             if(phoneNumberList.get(i).contains(",")){
-                phoneNumberList.set(i,phoneNumberList.get(i).replaceAll(",","``"));
+                phoneNumberList.set(i,phoneNumberList.get(i).replaceAll(",","~~"));
             }
         }
     }
 
     public void addBackCommas(){
-        if(firstName.contains("``")){
-            firstName = firstName.replaceAll("``",",");
+        if(firstName.contains("~~")){
+            firstName = firstName.replaceAll("~~",",");
         }
-        if(lastName.contains("``")){
-            lastName = lastName.replaceAll("``",",");
+        if(lastName.contains("~~")){
+            lastName = lastName.replaceAll("~~",",");
         }
-        if(address.contains("``")){
-            address = address.replaceAll("``",",");
+        if(address.contains("~~")){
+            address = address.replaceAll("~~",",");
         }
-        if(birthday.contains("``")){
-            birthday = birthday.replaceAll("``",",");
+        if(birthday.contains("~~")){
+            birthday = birthday.replaceAll("~~",",");
         }
-        if(company.contains("``")){
-            company = company.replaceAll("``",",");
-        }
-        for(int i=0;i<emailList.size();i++){
-            if(emailList.get(i).contains("``")){
-                emailList.set(i,emailList.get(i).replaceAll("``",","));
-            }
-        }
-        for(int i=0;i<phoneNumberList.size();i++){
-            if(phoneNumberList.get(i).contains("``")){
-                phoneNumberList.set(i,phoneNumberList.get(i).replaceAll("``",","));
-            }
+        if(company.contains("~~")){
+            company = company.replaceAll("~~",",");
         }
     }
     
