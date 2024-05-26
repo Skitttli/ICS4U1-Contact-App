@@ -11,6 +11,17 @@ public class Contact {
     private ArrayList<String> phoneNumberList = new ArrayList<>();
     private ArrayList<String> emailList = new ArrayList<>();
 
+    /** Sets all the data for the new contact
+     * 
+     * @param firstName First Name of the Contact
+     * @param lastName Last Name of the Contact
+     * @param phoneNumbers Phone Numbers of the Contact
+     * @param emails Emails of the Contact
+     * @param address Address of the Contact
+     * @param birthday Birthday of the Contact
+     * @param company Company of the Contact
+     * @param profileColour Profile Picture Colour of the Contact
+     */
     public Contact(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company,int profileColour){
         setFirstName(firstName);
         setLastName(lastName);
@@ -22,6 +33,16 @@ public class Contact {
         setProfileColour(profileColour);
     }
 
+    /** Changes all stored data of the contact other than the profile colour to the ones specificed
+     * 
+     * @param firstName First Name of the Contact
+     * @param lastName Last Name of the Contact
+     * @param phoneNumbers Phone Numbers of the Contact
+     * @param emails Emails of the Contact
+     * @param address Address of the Contact
+     * @param birthday Birthday of the Contact
+     * @param company Company of the Contact
+     */
     public void changeEverything(String firstName,String lastName,ArrayList<String> phoneNumbers,ArrayList<String> emails,String address,String birthday,String company){
         setFirstName(firstName);
         setLastName(lastName);
@@ -31,6 +52,10 @@ public class Contact {
         setBirthday(birthday);
         setCompany(company);
     }
+
+    /*
+     * Setters for the stored data of the contact
+     */
     public void setProfileColour(int profileColour){
         this.profileColour = profileColour;
     }
@@ -56,10 +81,17 @@ public class Contact {
         this.phoneNumberList = phoneList;
     }
 
-
+    /*
+     * Getters for the data stored of the contact
+     */
     public int getProfileColourInt(){
         return profileColour;
     }
+    /**
+     * Uses the int value stored and converts it to the hex value needed using a switch statement
+     * 
+     * @return the Hex of the profile colour for this contact
+     */
     public String getProfileColourHex(){
         switch (profileColour) {
             case 0:
@@ -156,6 +188,9 @@ public class Contact {
     }
 
 
+    /**
+     * Removes all commas from all data of this contact and replaces them with ~~
+     */
     public void removeCommas(){
         if(firstName.contains(",")){
             firstName = firstName.replaceAll(",","~~");
@@ -184,6 +219,9 @@ public class Contact {
         }
     }
 
+    /**
+     * Adds back all commas by replacing all ~~ with a comma
+     */
     public void addBackCommas(){
         if(firstName.contains("~~")){
             firstName = firstName.replaceAll("~~",",");
