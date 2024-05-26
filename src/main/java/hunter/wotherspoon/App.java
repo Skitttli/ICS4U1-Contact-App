@@ -145,6 +145,7 @@ public class App extends Application {
 
     /**
      * Initializes Main UI
+     * <p>Creates the cell factories for each column, as well as telling the add contact and the exit button what to do.
      */
     @SuppressWarnings("unchecked")
     public void initMainUI(){
@@ -217,7 +218,12 @@ public class App extends Application {
         mainScene = new Scene(mainVbox, 480, 480);
     }
 
-
+    /**
+     * Initializes the UI for a new contact and handles everything within that page
+     * <p> First it creates all the fields that are needed and their labels, including multiple phone numbers and emails.
+     * It then tells the add new contact button to add the new contact to the list when it is created. It also handles input validation when adding a new contact
+     * All of it is surrounded by a ScrollPane to ensure that it can be scrolled through and too many emails don't break it.
+     */
     public void newContact(){
         Stage addStage = new Stage();
 
@@ -376,6 +382,17 @@ public class App extends Application {
 
     }
 
+    /**
+     * Initializes the UI for to view and edit a contact and handles everything within that page
+     * <p> First it creates all the fields that are needed and their labels, including multiple phone numbers and emails.
+     * It adds all existing data into these fields to be shown.
+     * It then tells the save changes button to add the changes to the existing contact. Then refreshes the table.
+     * Handles the delete contact button which removes the contact from the table. Then refreshes the table.
+     * It also handles input validation event when editing fields that have already been created
+     * All of it is surrounded by a ScrollPane to ensure that it can be scrolled through and too many emails don't break it.
+     * 
+     * @param curContact The current contact that should be viewed
+     */
     public void viewContact(Contact curContact){
         Stage viewStage = new Stage();
 
@@ -561,6 +578,12 @@ public class App extends Application {
         viewStage.show();
     }  
 
+    /**
+     * Checks if the data for the contact entered is invalid and has characters that are on the no no list.
+     * Uses RegEx to check if there are matches or if there are characters contained
+     * 
+     * @return If invalid characters are in the strings, return true. Otherwise return false
+     */
     public boolean checkInvalid(String firstName,String lastName,ArrayList<String> phoneNumberList,ArrayList<String> emailList,String address,String birthday,String company){
         if(firstName.contains("~~")||lastName.contains("~~")||address.contains("~~")||birthday.contains("~~")||company.contains("~~")){
             return true;
